@@ -1,6 +1,9 @@
 package john.stemberger.components
 
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
@@ -42,8 +45,14 @@ open class BaseComponentAdapter : RecyclerView.Adapter<ComponentViewHolder>() {
          * start at 200-299, etc
          */
         @Synchronized
+        @JvmStatic
         protected fun getNextViewType(): Int {
             return ++sLastViewType
+        }
+
+        @JvmStatic
+        protected fun inflateLayout(parent: ViewGroup, @LayoutRes layout: Int): View {
+            return LayoutInflater.from(parent.context).inflate(layout, parent, false)
         }
     }
 

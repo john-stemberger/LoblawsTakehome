@@ -15,4 +15,4 @@ package john.stemberger.components
  * and have ComponentAdapter extend SocialAdapter. Now you can have all the benefits of the new
  * components in any fragment without having to make changes to the type of adapter created
  */
-class ComponentAdapter : BaseComponentAdapter()
+class ComponentAdapter : NewsAdapter()

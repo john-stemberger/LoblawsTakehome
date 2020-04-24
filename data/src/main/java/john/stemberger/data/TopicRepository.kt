@@ -9,6 +9,16 @@ import john.stemberger.remote.TopicList
 
 class TopicRepository {
 
+    companion object {
+        private val  INSTANCE: TopicRepository by lazy {
+            TopicRepository()
+        }
+
+        fun getRepository(): TopicRepository {
+            return INSTANCE
+        }
+    }
+
     private val kotlinTopics: BehaviorSubject<List<Topic>> by lazy {
         val behaviour = BehaviorSubject.create<List<Topic>>()
         loadData(behaviour)
@@ -17,7 +27,7 @@ class TopicRepository {
 
     private fun loadData(behaviour: BehaviorSubject<List<Topic>>) {
         val requestInterface = RemoteSources.getRedditSource()
-        requestInterface.getTopics("")
+        requestInterface.getTopics("kotlin")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
