@@ -56,7 +56,7 @@ open class BaseComponentAdapter : RecyclerView.Adapter<ComponentViewHolder>() {
         }
     }
 
-    private val components = mutableListOf<Pair<Int, ComponentBinder>>()
+    protected val components = mutableListOf<Pair<Int, ComponentBinder>>()
 
     private class ComponentDiffCallback(
         private val oldList: List<Pair<Int, ComponentBinder>>,

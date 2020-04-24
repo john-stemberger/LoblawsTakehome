@@ -10,6 +10,8 @@ import john.stemberger.remote.TopicList
 class TopicRepository {
 
     companion object {
+        private const val TOPIC_KEY = "kotlin"
+
         private val  INSTANCE: TopicRepository by lazy {
             TopicRepository()
         }
@@ -19,7 +21,7 @@ class TopicRepository {
         }
     }
 
-    private val kotlinTopics: BehaviorSubject<List<Topic>> by lazy {
+    private val topics: BehaviorSubject<List<Topic>> by lazy {
         val behaviour = BehaviorSubject.create<List<Topic>>()
         loadData(behaviour)
         behaviour
@@ -27,7 +29,7 @@ class TopicRepository {
 
     private fun loadData(behaviour: BehaviorSubject<List<Topic>>) {
         val requestInterface = RemoteSources.getRedditSource()
-        requestInterface.getTopics("kotlin")
+        requestInterface.getTopics(TOPIC_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
@@ -41,13 +43,13 @@ class TopicRepository {
     private fun mapRemoteToDataModel(topics: TopicList): List<Topic> {
         val newTopics = mutableListOf<Topic>()
         topics.threads.threads.forEach {
-            newTopics.add(Topic(it.data.title, it.data.thumbnail))
+            newTopics.add(Topic(it.data.id, it.data.title, it.data.thumbnail))
         }
         return newTopics
     }
 
-    fun getKotlinTopics(): Observable<List<Topic>> {
-        return kotlinTopics
+    fun getTopics(): Observable<List<Topic>> {
+        return topics
     }
 }
 

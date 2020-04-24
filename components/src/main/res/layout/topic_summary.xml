@@ -6,11 +6,6 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/topic_summary_thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:id="@+id/topic_summary_title"
         android:layout_width="match_parent"
@@ -18,4 +13,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:text="title of some random image" />
 
+    <ImageView
+        android:id="@+id/topic_summary_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true" />
 </LinearLayout>

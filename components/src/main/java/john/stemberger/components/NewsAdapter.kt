@@ -1,6 +1,5 @@
 package john.stemberger.components
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import john.stemberger.components.news.TopicSummaryViewHolder
 
@@ -10,8 +9,6 @@ open class NewsAdapter : BaseComponentAdapter() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComponentViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-
         return when (viewType) {
             VIEW_TYPE_TOPIC_SUMMARY -> TopicSummaryViewHolder(
                 inflateLayout(
@@ -20,8 +17,6 @@ open class NewsAdapter : BaseComponentAdapter() {
                 )
             )
             else -> super.onCreateViewHolder(parent, viewType)
-
         }
-
     }
 }

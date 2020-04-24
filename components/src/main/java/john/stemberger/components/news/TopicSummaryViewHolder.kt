@@ -13,7 +13,7 @@ class TopicSummaryViewHolder(itemView: View) : ComponentViewHolder(itemView) {
 
     override fun unbind() {
         thumbnail.setImageDrawable(null)
+        itemView.setOnClickListener(null)
         super.unbind()
     }
-
 }
