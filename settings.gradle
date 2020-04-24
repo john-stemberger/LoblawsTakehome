@@ -1,0 +1,5 @@
+rootProject.name='LoblawsTakeHome'
+include ':app'
+include ':components'
+include ':remote'
+include ':data'
