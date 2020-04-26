@@ -39,8 +39,7 @@ class TopicListViewModel : ViewModel(),
             val binder = TopicSummaryBinder(
                 topic.title,
                 topic.thumbnail,
-                GlideImageLoader.getImageLoader(),
-                WeakReference(this)
+                GlideImageLoader.getImageLoader()
             )
             binder.id = topic.id
             Pair(NewsAdapter.VIEW_TYPE_TOPIC_SUMMARY, binder)

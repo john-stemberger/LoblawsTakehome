@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import john.stemberger.components.ComponentAdapter
 import john.stemberger.components.ComponentBinder
+import john.stemberger.components.news.TopicSummaryBinder
 import john.stemberger.loblawstakehome.R
 
-class TopicListFragment : Fragment() {
+class TopicListFragment : Fragment(),
+    TopicSummaryBinder.TopicSummaryListener {
 
     companion object {
         fun newInstance() = TopicListFragment()
@@ -33,8 +35,11 @@ class TopicListFragment : Fragment() {
 
         adapter = ComponentAdapter()
         list = ViewCompat.requireViewById(view, R.id.topic_list)
-        list.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        list.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         list.adapter = adapter
         list.addItemDecoration(
             DividerItemDecoration(
@@ -52,8 +57,19 @@ class TopicListFragment : Fragment() {
     }
 
     private fun onNewList(components: List<Pair<Int, ComponentBinder>>) {
+        components.forEach { pair ->
+            if (pair.second is TopicSummaryBinder) {
+                (pair.second as TopicSummaryBinder).setListener(this)
+            }
+        }
         adapter.setComponents(components)
     }
+
+    //region TopicSummaryBinder.TopicSummaryListener
+    override fun onClick(binder: TopicSummaryBinder) {
+        // TODO navigate to topic based on the id
+    }
+    // endregion
 
 
 }

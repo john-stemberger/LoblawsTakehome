@@ -9,13 +9,18 @@ import java.lang.ref.WeakReference
 data class TopicSummaryBinder(
     val title: String,
     val thumbnail: String? = null,
-    val imageLoader: ImageLoader,
-    val weakListener: WeakReference<TopicSummaryListener>? = null
+    val imageLoader: ImageLoader
 ) : ComponentBinder(),
     View.OnClickListener {
 
     interface TopicSummaryListener {
         fun onClick(binder: TopicSummaryBinder)
+    }
+
+    var weakListener: WeakReference<TopicSummaryListener>? = null
+
+    fun setListener(ear: TopicSummaryListener) {
+        weakListener = WeakReference(ear)
     }
 
     override fun bind(viewHolder: ComponentViewHolder) {
