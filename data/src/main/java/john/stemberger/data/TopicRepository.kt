@@ -33,12 +33,14 @@ class TopicRepository {
         requestInterface.getTopics(TOPIC_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .map { topicList ->
-                mapRemoteToDataModel(topicList)
-            }
-            .subscribe { list ->
-                behaviour.onNext(list)
-            }
+            .subscribe(
+                { list ->
+                    behaviour.onNext(mapRemoteToDataModel(list))
+                },
+                {
+                    behaviour.onNext(emptyList())
+                }
+            )
     }
 
     private fun mapRemoteToDataModel(topics: TopicList): List<Topic> {
