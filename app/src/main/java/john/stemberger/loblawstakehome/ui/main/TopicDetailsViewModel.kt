@@ -3,7 +3,6 @@ package john.stemberger.loblawstakehome.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import john.stemberger.components.news.TopicDetailsBinder
 import john.stemberger.data.Topic
@@ -35,7 +34,7 @@ class TopicDetailsViewModel : ViewModel() {
 
     private fun refreshTopicData() {
         topicRepository.getTopics()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.computation())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
                 mapDataModelToComponentBinder(topicList)

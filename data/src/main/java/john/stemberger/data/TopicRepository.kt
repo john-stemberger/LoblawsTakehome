@@ -1,7 +1,6 @@
 package john.stemberger.data
 
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import john.stemberger.remote.RemoteSources
@@ -31,7 +30,7 @@ class TopicRepository {
     private fun loadData(behaviour: BehaviorSubject<List<Topic>>) {
         val requestInterface = RemoteSources.getRedditSource()
         requestInterface.getTopics(TOPIC_KEY)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.computation())
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { list ->

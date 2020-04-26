@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import john.stemberger.components.ComponentBinder
 import john.stemberger.components.NewsAdapter
@@ -21,7 +20,7 @@ class TopicListViewModel : ViewModel() {
     private val listModels: MutableLiveData<List<Pair<Int, ComponentBinder>>> by lazy {
         var liveData = MutableLiveData<List<Pair<Int, ComponentBinder>>>()
         topicRepository.getTopics()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.computation())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
                 mapDataModelToComponentBinder(topicList)
