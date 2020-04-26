@@ -16,4 +16,6 @@ data class RedditThread(val kind: String,
 data class ThreadData(
     val id: String,
     @SerializedName("url") val thumbnail: String?,
-    val title: String)
+    val title: String,
+    @SerializedName("selftext")
+    val body: String)

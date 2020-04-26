@@ -5,6 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import john.stemberger.remote.RemoteSources
+import john.stemberger.remote.ThreadData
 import john.stemberger.remote.TopicList
 
 class TopicRepository {
@@ -12,7 +13,7 @@ class TopicRepository {
     companion object {
         private const val TOPIC_KEY = "kotlin"
 
-        private val  INSTANCE: TopicRepository by lazy {
+        private val INSTANCE: TopicRepository by lazy {
             TopicRepository()
         }
 
@@ -43,9 +44,17 @@ class TopicRepository {
     private fun mapRemoteToDataModel(topics: TopicList): List<Topic> {
         val newTopics = mutableListOf<Topic>()
         topics.threads.threads.forEach {
-            newTopics.add(Topic(it.data.id, it.data.title, it.data.thumbnail))
+            newTopics.add(Topic(it.data.id, it.data.title, getBody(it.data), it.data.thumbnail))
         }
         return newTopics
+    }
+
+    private fun getBody(data: ThreadData): String {
+        return if (data.body.isEmpty()) {
+            data.thumbnail ?: ""
+        } else {
+            data.body
+        }
     }
 
     fun getTopics(): Observable<List<Topic>> {
