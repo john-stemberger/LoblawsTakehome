@@ -16,4 +16,10 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
     }
+
+    fun show(topicId: Any?) {
+//        val intent = Intent(this, ProductActivity::class.java)
+//        intent.putExtra(ProductActivity.KEY_PRODUCT_ID, product.id)
+//        startActivity(intent)
+    }
 }
