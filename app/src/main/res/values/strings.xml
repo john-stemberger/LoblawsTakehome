@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoblawsTakeHome</string>
+
+    <string name="topic_list_title">Kotlin News</string>
 </resources>

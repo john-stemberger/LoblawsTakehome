@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/topicListFragment"
         android:name="john.stemberger.loblawstakehome.ui.main.TopicListFragment"
-        android:label="TopicListFragment"
+        android:label="@string/topic_list_title"
         tools:layout="@layout/topic_list_fragment">
         <action
             android:id="@+id/action_topicListFragment_to_topicDetailsFragment"
@@ -18,10 +18,17 @@
     <fragment
         android:id="@+id/topicDetailsFragment"
         android:name="john.stemberger.loblawstakehome.ui.main.TopicDetailsFragment"
-        android:label="topic_details_fragment"
+        android:label="{topic_title}"
         tools:layout="@layout/topic_details_fragment">
         <argument
             android:name="topic_id"
             app:argType="string" />
+        <argument
+            android:name="topic_title"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/back"
+            app:popUpTo="@id/topicListFragment" />
     </fragment>
 </navigation>

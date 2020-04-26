@@ -68,11 +68,7 @@ class TopicListFragment : Fragment(),
 
     //region TopicSummaryBinder.TopicSummaryListener
     override fun onClick(binder: TopicSummaryBinder) {
-        val id = binder.id
-        if(!id.isNullOrEmpty()) {
-            val action = TopicListFragmentDirections.actionTopicListFragmentToTopicDetailsFragment(id)
-            findNavController().navigate(action)
-        }
+        viewModel.navigateToDetails(findNavController(), binder)
     }
     // endregion
 

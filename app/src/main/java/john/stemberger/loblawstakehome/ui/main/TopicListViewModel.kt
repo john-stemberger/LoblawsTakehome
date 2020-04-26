@@ -3,6 +3,7 @@ package john.stemberger.loblawstakehome.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import john.stemberger.components.ComponentBinder
@@ -11,10 +12,8 @@ import john.stemberger.components.news.TopicSummaryBinder
 import john.stemberger.data.Topic
 import john.stemberger.data.TopicRepository
 import john.stemberger.loblawstakehome.ui.GlideImageLoader
-import java.lang.ref.WeakReference
 
-class TopicListViewModel : ViewModel(),
-    TopicSummaryBinder.TopicSummaryListener {
+class TopicListViewModel : ViewModel() {
     private val topicRepository: TopicRepository by lazy {
         TopicRepository.getRepository()
     }
@@ -50,9 +49,15 @@ class TopicListViewModel : ViewModel(),
         return listModels
     }
 
-    // region TopicSummaryBinder.TopicSummaryListener
-    override fun onClick(binder: TopicSummaryBinder) {
-
+    fun navigateToDetails(navController: NavController, binder: TopicSummaryBinder) {
+        val id = binder.id
+        val title = binder.title
+        if (!id.isNullOrEmpty()) {
+            val action = TopicListFragmentDirections.actionTopicListFragmentToTopicDetailsFragment(
+                topicId = id,
+                topicTitle = title
+            )
+            navController.navigate(action)
+        }
     }
-    // endregion
 }
