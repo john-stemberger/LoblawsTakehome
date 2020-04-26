@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topic_list_graph"
+    app:startDestination="@id/topicListFragment">
+
+    <fragment
+        android:id="@+id/topicListFragment"
+        android:name="john.stemberger.loblawstakehome.ui.main.TopicListFragment"
+        android:label="TopicListFragment"
+        tools:layout="@layout/topic_list_fragment">
+        <action
+            android:id="@+id/action_topicListFragment_to_topicDetailsFragment"
+            app:destination="@id/topicDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/topicDetailsFragment"
+        android:name="john.stemberger.loblawstakehome.ui.main.TopicDetailsFragment"
+        android:label="topic_details_fragment"
+        tools:layout="@layout/topic_details_fragment">
+        <argument
+            android:name="topic_id"
+            app:argType="string" />
+    </fragment>
+</navigation>

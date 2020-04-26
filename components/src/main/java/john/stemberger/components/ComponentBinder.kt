@@ -1,6 +1,6 @@
 package john.stemberger.components
 
 abstract class ComponentBinder {
-    var id: Any? = null
+    var id: String? = null
     abstract fun bind(viewHolder: ComponentViewHolder)
 }

@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,7 +68,11 @@ class TopicListFragment : Fragment(),
 
     //region TopicSummaryBinder.TopicSummaryListener
     override fun onClick(binder: TopicSummaryBinder) {
-        // TODO navigate to topic based on the id
+        val id = binder.id
+        if(!id.isNullOrEmpty()) {
+            val action = TopicListFragmentDirections.actionTopicListFragmentToTopicDetailsFragment(id)
+            findNavController().navigate(action)
+        }
     }
     // endregion
 
