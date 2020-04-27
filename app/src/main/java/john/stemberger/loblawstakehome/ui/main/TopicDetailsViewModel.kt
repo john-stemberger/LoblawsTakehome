@@ -3,6 +3,7 @@ package john.stemberger.loblawstakehome.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import john.stemberger.components.news.TopicDetailsBinder
 import john.stemberger.data.Topic
@@ -10,6 +11,10 @@ import john.stemberger.data.TopicRepository
 import john.stemberger.loblawstakehome.ui.GlideImageLoader
 
 class TopicDetailsViewModel : ViewModel() {
+    private val disposables: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
+
     private val topicLiveData: MutableLiveData<TopicDetailsBinder?> by lazy {
         MutableLiveData<TopicDetailsBinder?>()
     }
@@ -33,7 +38,8 @@ class TopicDetailsViewModel : ViewModel() {
     }
 
     private fun refreshTopicData() {
-        topicRepository.getTopics()
+        disposables.clear()
+        val disposable = topicRepository.getTopics()
             .observeOn(Schedulers.computation())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
@@ -42,6 +48,7 @@ class TopicDetailsViewModel : ViewModel() {
             .subscribe { binder ->
                 topicLiveData.postValue(binder)
             }
+        disposables.add(disposable)
     }
 
     private fun mapDataModelToComponentBinder(topicList: List<Topic>): TopicDetailsBinder? {
@@ -51,6 +58,11 @@ class TopicDetailsViewModel : ViewModel() {
         } else {
             null
         }
+    }
+
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
     }
 
 }

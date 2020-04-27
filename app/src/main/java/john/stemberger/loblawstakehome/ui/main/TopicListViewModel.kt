@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import john.stemberger.components.ComponentBinder
 import john.stemberger.components.NewsAdapter
@@ -13,13 +14,18 @@ import john.stemberger.data.TopicRepository
 import john.stemberger.loblawstakehome.ui.GlideImageLoader
 
 class TopicListViewModel : ViewModel() {
+    private val disposables: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
+
     private val topicRepository: TopicRepository by lazy {
         TopicRepository.getRepository()
     }
 
     private val listModels: MutableLiveData<List<Pair<Int, ComponentBinder>>> by lazy {
         var liveData = MutableLiveData<List<Pair<Int, ComponentBinder>>>()
-        topicRepository.getTopics()
+        disposables.clear()
+        val disposable = topicRepository.getTopics()
             .observeOn(Schedulers.computation())
             .subscribeOn(Schedulers.io())
             .map { topicList ->
@@ -28,6 +34,7 @@ class TopicListViewModel : ViewModel() {
             .subscribe { list ->
                 liveData.postValue(list)
             }
+        disposables.add(disposable)
         liveData.postValue(emptyList())
         liveData
     }
@@ -58,5 +65,10 @@ class TopicListViewModel : ViewModel() {
             )
             navController.navigate(action)
         }
+    }
+
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
     }
 }
